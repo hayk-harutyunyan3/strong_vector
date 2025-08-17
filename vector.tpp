@@ -15,7 +15,7 @@ Vector<T>::Vector(size_type count, const T &value) : Vector{} {
         m_size = m_capacity = count;
     }
     catch (...) {
-        operator delete[](m_data);
+        operator delete(m_data);
         throw;
     }
 }
@@ -30,7 +30,7 @@ Vector<T>::Vector(const Vector &other) : Vector{} {
         m_size = other.m_size;
     }
     catch (...) {
-        operator delete[](m_data);
+        operator delete(m_data);
         throw;
     }
 }
@@ -51,7 +51,7 @@ Vector<T>::Vector(const std::initializer_list<T> &il) {
         m_capacity = m_size = il.size();
     }
     catch (...) {
-        operator delete[](m_data);
+        operator delete(m_data);
         throw;
     }
 }
@@ -60,7 +60,7 @@ template <typename T>
 Vector<T>::~Vector() {
     clear();
 
-    operator delete[](m_data);
+    operator delete(m_data);
 }
 
 template <typename T>
@@ -166,13 +166,13 @@ void Vector<T>::reserve(typename Vector<T>::size_type new_cap) {
         for (size_type j = 0; j < i; ++j) {
             new_data[j].~T();
         }
-        operator delete[](new_data);
+        operator delete(new_data);
         throw;
     }
 
     size_type tmp = m_size;
     clear();
-    operator delete[](m_data);
+    operator delete(m_data);
 
     m_data = new_data;
     m_capacity = new_cap;
@@ -216,7 +216,7 @@ void Vector<T>::insert(size_type pos, const T& val) {
         for (size_type i = 0; i < pos; ++i) {
             new (m_data[i]) T(std::move(new_data[i]));
         }
-        operator delete[](new_data);
+        operator delete(new_data);
         throw;
     }
 
@@ -224,7 +224,7 @@ void Vector<T>::insert(size_type pos, const T& val) {
         new (&new_data[i]) T(std::move(m_data[i - 1]));
     }
 
-    operator delete[](m_data);
+    operator delete(m_data);
     m_data = new_data;
     ++m_size;
     m_capacity = new_capacity;
@@ -269,7 +269,7 @@ void Vector<T>::insert(size_type pos, size_type count, const T &val) {
         for (size_type i = 0; i < pos; ++i) {
             new (&m_data[i]) T(std::move(new_data[i]));
         }
-        operator delete[](new_data);
+        operator delete(new_data);
         throw;
     }
 
@@ -277,7 +277,7 @@ void Vector<T>::insert(size_type pos, size_type count, const T &val) {
         new (&new_data[i]) T(std::move(m_data[i - count]));
     }
 
-    operator delete[](m_data);
+    operator delete(m_data);
     m_data = new_data;
     m_size += count;
     m_capacity = new_capacity;
@@ -308,7 +308,7 @@ void Vector<T>::emplace(size_type pos, Args &&...args) {
         for (size_type i = 0; i < pos; ++i) {
             new (m_data[i]) T(std::move(new_data[i]));
         }
-        operator delete[](new_data);
+        operator delete(new_data);
         throw;
     }
 
@@ -316,7 +316,7 @@ void Vector<T>::emplace(size_type pos, Args &&...args) {
         new (&new_data[i]) T(std::move(m_data[i - 1]));
     }
 
-    operator delete[](m_data);
+    operator delete(m_data);
     m_data = new_data;
     ++m_size;
     m_capacity = new_capacity;
