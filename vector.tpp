@@ -154,7 +154,7 @@ template <typename T>
 void Vector<T>::reserve(typename Vector<T>::size_type new_cap) {
     if (new_cap <= m_capacity) return;
 
-    T *new_data = static_cast<T *>(operator new(new_cap));
+    T *new_data = static_cast<T *>(operator new(sizeof(T) * new_cap));
 
     size_type i = 0;
     try {
@@ -198,11 +198,11 @@ void Vector<T>::insert(size_type pos, const T& val) {
     size_type new_capacity = m_capacity;
 
     if (m_size == m_capacity) {
-        new_data = static_cast<T *>(operator new(m_capacity * 2));
+        new_data = static_cast<T *>(operator new(sizeof(T) * m_capacity * 2));
         new_capacity = m_capacity * 2;
     }
     else {
-        new_data = static_cast<T *>(operator new(m_capacity));
+        new_data = static_cast<T *>(operator new(sizeof(T) * m_capacity));
     }
 
     for (size_type i = 0; i < pos; ++i) {
@@ -250,12 +250,12 @@ void Vector<T>::insert(size_type pos, size_type count, const T &val) {
     T *new_data = nullptr;
     size_type new_capacity = m_capacity;
     if (m_size + count > m_capacity) {
-        new_data = static_cast<T *>(operator new((m_size + count) * 2));
+        new_data = static_cast<T *>(operator new(sizeof(T) * (m_size + count) * 2));
         new_capacity = (m_size + count) * 2;
     }
     else {
         // std::cout << std::endl << "here" << std::endl;
-        new_data = static_cast<T *>(operator new(m_capacity));
+        new_data = static_cast<T *>(operator new(sizeof(T) * m_capacity));
     }
 
     for (size_type i = 0; i < pos; ++i) {
@@ -290,11 +290,11 @@ void Vector<T>::emplace(size_type pos, Args &&...args) {
     size_type new_capacity = m_capacity;
 
     if (m_size == m_capacity) {
-        new_data = static_cast<T *>(operator new(m_capacity * 2));
+        new_data = static_cast<T *>(operator new(sizeof(T) * m_capacity * 2));
         new_capacity = m_capacity * 2;
     }
     else {
-        new_data = static_cast<T *>(operator new(m_capacity));
+        new_data = static_cast<T *>(operator new(sizeof(T) * m_capacity));
     }
 
     for (size_type i = 0; i < pos; ++i) {

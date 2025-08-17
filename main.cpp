@@ -1,7 +1,7 @@
 #include <iostream>
 #include "vector.hpp"
 
-// ---------------- SEGMENTION FAULT (MEY BE IN DESTRUCTORS) ----------------
+// ---------------- SEGMENTION FAULT FIXED (ISSUE WAS WITH OPERATOR NEW) ----------------
 
 int main() {
     // Default constructor
